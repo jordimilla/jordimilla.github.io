@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Jordi Milla, senior iOS developer in Barcelona. Swift, UIKit, SwiftUI, and apps on the App Store.">
+<meta name="description" content="Jordi Milla, senior iOS and AI engineer in Barcelona. System design, AI agents, Swift, Python and apps on the App Store.">
 <title>Jordi Milla</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,6 +97,13 @@
   .app .go { margin-top: auto; font-size: 13px; font-weight: 600; color: var(--accent); padding-top: 4px; }
   .all { margin-top: 20px; font-size: 15px; }
 
+  .projects { display: grid; gap: 16px; }
+  .project { padding: 22px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; min-width: 0; }
+  .project .tag { font: 500 12px/1 var(--font-mono); color: var(--accent); display: block; margin-bottom: 10px; }
+  .project p { margin: 8px 0 0; font-size: 15px; }
+  .project ul { margin: 12px 0 0; padding-left: 18px; font-size: 15px; max-width: 68ch; }
+  .project li { margin-bottom: 5px; }
+  .project li::marker { color: var(--muted); }
   .skills { display: grid; gap: 0; }
   .skill-row { display: grid; grid-template-columns: 170px 1fr; gap: 8px 32px; padding-block: 14px; border-bottom: 1px solid var(--border); }
   .skill-row:last-child { border-bottom: 0; }
@@ -135,6 +142,7 @@
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
           <li><a href="#apps">Apps</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#contact">Contact</a></li>
@@ -145,9 +153,9 @@
 
   <main id="top">
     <div class="hero">
-      <p class="eyebrow">Senior iOS Developer &middot; Barcelona</p>
-      <h1>I build iOS apps that stay fast and reliable.</h1>
-      <p class="lede">13 years shipping native apps in Swift, from fintech and EV charging to insurance and government services. I also publish my own apps on the App Store.</p>
+      <p class="eyebrow">Senior iOS &amp; AI Engineer &middot; Barcelona</p>
+      <h1>I design and build systems, from the iPhone to the backend and the agents.</h1>
+      <p class="lede">13 years shipping native apps in Swift, now building AI-powered products end to end: Clean Architecture, contract-first APIs, a Python backend, and AI agents. I also publish my own apps on the App Store.</p>
       <div class="cta">
         <a class="btn primary" href="#apps">See my apps</a>
         <a class="btn" href="https://www.linkedin.com/in/jordi-milla-25981aa9/" target="_blank" rel="noopener">LinkedIn</a>
@@ -156,15 +164,15 @@
       <div class="meta">
         <span><b>13</b> years in iOS</span>
         <span><b>7</b> apps on the App Store</span>
-        <span><b>Swift</b> &middot; UIKit &middot; SwiftUI</span>
+        <span><b>Swift</b> &middot; <b>Python</b> &middot; <b>AI agents</b></span>
       </div>
     </div>
 
     <section id="about" class="about">
       <h2>About</h2>
-      <p>I'm a senior iOS developer who enjoys owning a feature from architecture to release. My work covers networking, performance, testing and App Store delivery, in teams of different sizes and, for the last few years, remotely.</p>
-      <p>I have hands-on experience with Core Location, in-app purchases, on-device data, widgets, Live Activities and Apple Watch. I'm a certified Scrum Master.</p>
-      <p>Beyond the app itself, I'm comfortable with the backend side: I use Docker to set up stub and mock servers (C#, Python and more) so teams can develop and test against realistic APIs. AI is where I spend a lot of my time, from AI-assisted development workflows (Claude Code, agent skills, MCP) to building with the Claude API.</p>
+      <p>I'm a senior iOS engineer moving into AI engineering. I enjoy owning a product from architecture to release: system design, networking, performance, testing and delivery, in teams of different sizes and, for the last few years, remotely.</p>
+      <p>On the backend I work with Python and FastAPI on PostgreSQL/PostGIS, organised with Clean Architecture and an OpenAPI contract that the clients are generated from. I use Docker to run databases and to set up stub and mock servers (C#, Python and more) so teams can develop and test against realistic APIs.</p>
+      <p>On the AI side I work with agents and prompt engineering: phased specs and prompts that drive coding agents, Claude Code, the Claude API, MCP and agent skills. On device I use Speech for offline subtitles. I'm also a certified Scrum Master.</p>
     </section>
 
     <section id="experience">
@@ -207,6 +215,32 @@
       </div>
     </section>
 
+    <section id="projects">
+      <h2>Selected projects</h2>
+      <div class="projects">
+        <article class="project">
+          <span class="tag">Platform &middot; iOS, Android, web, backend</span>
+          <h3>Parkvan</h3>
+          <p>A platform for motorhome areas: a traveller app with map and bookings, management for owners, and access control.</p>
+          <ul>
+            <li>Modular FastAPI backend with Clean Architecture on PostgreSQL/PostGIS (Supabase), with 50+ Alembic migrations.</li>
+            <li>OpenAPI contract as the single source of truth: the iOS client is generated from it and CI fails if it is out of date.</li>
+            <li>SwiftUI app in a modular Swift package (Core Location, MapKit), plus an Android app and a Next.js web.</li>
+            <li>568 backend tests, CI, security and backup workflows, and about 1,200 real areas imported from OpenStreetMap.</li>
+          </ul>
+        </article>
+        <article class="project">
+          <span class="tag">iOS &middot; on-device ML</span>
+          <h3>Warpcut</h3>
+          <p>A video editor with fully on-device automatic subtitles (Speech) and media analysis for automatic montages. Planned and built with phased specs and prompts that drive AI coding agents.</p>
+        </article>
+        <article class="project">
+          <span class="tag">Python &middot; data pipeline</span>
+          <h3>Pisos</h3>
+          <p>A Python pipeline that aggregates four property-listing sources, geolocates and filters them, removes duplicates and sends notifications.</p>
+        </article>
+      </div>
+    </section>
     <section id="apps">
       <h2>Apps on the App Store</h2>
       <div class="apps">
@@ -252,14 +286,11 @@
     <section id="skills">
       <h2>Skills</h2>
       <dl class="skills">
-        <div class="skill-row"><dt>Languages &amp; UI</dt><dd class="chips"><span class="chip">Swift</span><span class="chip">UIKit</span><span class="chip">SwiftUI</span><span class="chip">WidgetKit</span><span class="chip">Live Activities</span><span class="chip">watchOS</span></dd></div>
-        <div class="skill-row"><dt>Location</dt><dd class="chips"><span class="chip">Core Location</span></dd></div>
-        <div class="skill-row"><dt>App Store</dt><dd class="chips"><span class="chip">In-app purchases</span><span class="chip">On-device data</span><span class="chip">Publishing</span></dd></div>
-        <div class="skill-row"><dt>Architecture</dt><dd class="chips"><span class="chip">Coordinators</span><span class="chip">MVVM</span><span class="chip">Modular design</span><span class="chip">REST / Codable</span><span class="chip">Performance</span></dd></div>
-        <div class="skill-row"><dt>AI</dt><dd class="chips"><span class="chip">Claude Code</span><span class="chip">Claude API</span><span class="chip">MCP</span><span class="chip">Agent skills</span><span class="chip">AI-assisted workflows</span></dd></div>
-        <div class="skill-row"><dt>Backend &amp; infra</dt><dd class="chips"><span class="chip">Docker</span><span class="chip">Stub / mock servers</span><span class="chip">C#</span><span class="chip">Python</span></dd></div>
-        <div class="skill-row"><dt>Quality &amp; delivery</dt><dd class="chips"><span class="chip">XCTest</span><span class="chip">SwiftLint</span><span class="chip">Azure DevOps</span><span class="chip">Scrum</span></dd></div>
-        <div class="skill-row"><dt>Tooling</dt><dd class="chips"><span class="chip">Xcode</span><span class="chip">Git</span><span class="chip">Sentry</span></dd></div>
+        <div class="skill-row"><dt>AI</dt><dd class="chips"><span class="chip">Agentic workflows</span><span class="chip">Prompt engineering</span><span class="chip">Claude Code</span><span class="chip">Claude API</span><span class="chip">MCP</span><span class="chip">Agent skills</span></dd></div>
+        <div class="skill-row"><dt>System design</dt><dd class="chips"><span class="chip">Clean Architecture</span><span class="chip">Modular monoliths</span><span class="chip">OpenAPI contract-first</span><span class="chip">Coordinators</span><span class="chip">MVVM</span></dd></div>
+        <div class="skill-row"><dt>Backend &amp; infra</dt><dd class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL / PostGIS</span><span class="chip">Supabase</span><span class="chip">Alembic</span><span class="chip">Docker</span><span class="chip">Stub / mock servers</span><span class="chip">C#</span></dd></div>
+        <div class="skill-row"><dt>iOS</dt><dd class="chips"><span class="chip">Swift</span><span class="chip">UIKit</span><span class="chip">SwiftUI</span><span class="chip">Core Location</span><span class="chip">MapKit</span><span class="chip">StoreKit</span><span class="chip">WidgetKit</span><span class="chip">Speech</span><span class="chip">Live Activities</span><span class="chip">watchOS</span></dd></div>
+        <div class="skill-row"><dt>Quality &amp; delivery</dt><dd class="chips"><span class="chip">XCTest</span><span class="chip">pytest</span><span class="chip">SwiftLint</span><span class="chip">CI/CD</span><span class="chip">Azure DevOps</span><span class="chip">Sentry</span><span class="chip">Scrum</span></dd></div>
       </dl>
     </section>
 
