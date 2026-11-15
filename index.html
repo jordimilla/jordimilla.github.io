@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Jordi Milla, senior iOS developer in Barcelona. Swift, UIKit, SwiftUI, and apps on the App Store.">
+<title>Jordi Milla</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: left-aligned single column, sticky top nav, hero then sections separated by hairlines; apps in a 2-col grid */
+  :root {
+    --bg: #f6f7f9; --bg-elev: #ffffff; --card: #ffffff; --border: #dfe3e8;
+    --text: #444b55; --muted: #6b7380; --heading: #0d1014; --accent: #0a66d9; --accent-soft: #0a66d91a;
+    --font-display: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0b0c0e; --bg-elev: #121417; --card: #16191d; --border: #23272d;
+      --text: #a3a9b3; --muted: #6f7681; --heading: #f4f6f8; --accent: #3d95ff; --accent-soft: #3d95ff1f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0b0c0e; --bg-elev: #121417; --card: #16191d; --border: #23272d;
+    --text: #a3a9b3; --muted: #6f7681; --heading: #f4f6f8; --accent: #3d95ff; --accent-soft: #3d95ff1f;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 400 16px/1.65 var(--font-body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    z-index: 30; background: var(--bg);
+  }
+  header.nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    padding-inline: max(16px, env(safe-area-inset-left, 0px));
+  }
+  .nav-in { max-width: 880px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+  .brand { font-weight: 800; color: var(--heading); letter-spacing: -0.02em; }
+  .nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; overflow-x: auto; }
+  .nav li a { color: var(--muted); font-size: 14px; font-weight: 500; white-space: nowrap; }
+  .nav li a:hover { color: var(--heading); text-decoration: none; }
+
+  .hero { padding-block: 72px 56px; }
+  .eyebrow { font: 500 13px/1 var(--font-mono); color: var(--accent); letter-spacing: 0.04em; margin: 0 0 20px; }
+  h1 { font: 800 clamp(40px, 8vw, 68px)/1.02 var(--font-display); letter-spacing: -0.035em; color: var(--heading); margin: 0 0 20px; text-wrap: balance; }
+  .lede { max-width: 60ch; font-size: 18px; color: var(--text); margin: 0 0 28px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 10px; font-weight: 600; font-size: 15px; border: 1px solid var(--border); color: var(--heading); background: var(--bg-elev); }
+  .btn:hover { text-decoration: none; border-color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 36px; font: 400 13px/1.4 var(--font-mono); color: var(--muted); }
+  .meta b { color: var(--heading); font-weight: 500; }
+
+  section { padding-block: 56px; border-top: 1px solid var(--border); scroll-margin-top: 64px; }
+  h2 { font: 700 13px/1 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 28px; }
+  h3 { font: 700 20px/1.3 var(--font-display); color: var(--heading); margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0 0 14px; max-width: 68ch; }
+
+  .about p { font-size: 17px; }
+
+  .job { display: grid; grid-template-columns: 170px 1fr; gap: 8px 32px; padding-block: 22px; border-bottom: 1px solid var(--border); }
+  .job:last-of-type { border-bottom: 0; }
+  .job .when { font: 400 13px/1.6 var(--font-mono); color: var(--muted); padding-top: 4px; }
+  .job .role { color: var(--accent); font-weight: 600; font-size: 14px; margin: 2px 0 10px; }
+  .job ul { margin: 0; padding-left: 18px; max-width: 68ch; }
+  .job li { margin-bottom: 6px; }
+  .job li::marker { color: var(--muted); }
+  .earlier { font-size: 14px; color: var(--muted); }
+
+  .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .app { display: flex; flex-direction: column; gap: 10px; padding: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; color: var(--text); min-width: 0; }
+  .app:hover { text-decoration: none; border-color: var(--accent); }
+  .app .tag { font: 500 12px/1 var(--font-mono); color: var(--accent); }
+  .app p { margin: 0; font-size: 15px; }
+  .app .go { margin-top: auto; font-size: 13px; font-weight: 600; color: var(--accent); padding-top: 4px; }
+  .all { margin-top: 20px; font-size: 15px; }
+
+  .skills { display: grid; gap: 0; }
+  .skill-row { display: grid; grid-template-columns: 170px 1fr; gap: 8px 32px; padding-block: 14px; border-bottom: 1px solid var(--border); }
+  .skill-row:last-child { border-bottom: 0; }
+  .skill-row dt { font-weight: 600; color: var(--heading); margin: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
+  .chip { padding: 4px 11px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 13.5px; font-weight: 500; }
+
+  .edu { display: grid; gap: 10px; max-width: 68ch; }
+  .edu div { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .edu span:last-child { font: 400 13px/1.7 var(--font-mono); color: var(--muted); }
+  .edu b { color: var(--heading); font-weight: 600; }
+
+  .contact h3 { font-size: clamp(26px, 5vw, 38px); margin-bottom: 14px; text-wrap: balance; }
+  .mail { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 18px; }
+  .mail code { font: 500 16px/1 var(--font-mono); color: var(--heading); user-select: all; }
+  .copy { cursor: pointer; font: 600 13px/1 var(--font-body); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-elev); color: var(--heading); }
+  .copy:hover { border-color: var(--accent); }
+  footer { padding-block: 32px 40px; border-top: 1px solid var(--border); font: 400 13px/1.5 var(--font-mono); color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .hero { padding-block: 48px 40px; }
+    .job, .skill-row { grid-template-columns: 1fr; gap: 4px; }
+    .apps { grid-template-columns: minmax(0, 1fr); }
+    section { padding-block: 40px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="nav">
+    <div class="nav-in">
+      <a class="brand" href="#top">Jordi Milla</a>
+      <nav aria-label="Sections">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#apps">Apps</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <p class="eyebrow">Senior iOS Developer &middot; Barcelona</p>
+      <h1>I build iOS apps that stay fast and reliable.</h1>
+      <p class="lede">13 years shipping native apps in Swift, from fintech and EV charging to insurance and government services. I also publish my own apps on the App Store.</p>
+      <div class="cta">
+        <a class="btn primary" href="#apps">See my apps</a>
+        <a class="btn" href="https://www.linkedin.com/in/jordimilla-25981aa9" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+      <div class="meta">
+        <span><b>13</b> years in iOS</span>
+        <span><b>7</b> apps on the App Store</span>
+        <span><b>Swift</b> &middot; UIKit &middot; SwiftUI</span>
+      </div>
+    </div>
+
+    <section id="about" class="about">
+      <h2>About</h2>
+      <p>I'm a senior iOS developer who enjoys owning a feature from architecture to release. My work covers networking, performance, testing and App Store delivery, in teams of different sizes and, for the last few years, remotely.</p>
+      <p>I have hands-on experience with Core Location and Apple CarPlay, in-app purchases, on-device data, widgets, Live Activities and Apple Watch. I'm a certified Scrum Master and I use AI-assisted workflows (Claude Code, agent skills, MCP) to speed up implementation and review.</p>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="job">
+        <div class="when">Jan 2023 &ndash; Present</div>
+        <div>
+          <h3>Future Workshops</h3>
+          <div class="role">Senior iOS Developer</div>
+          <ul>
+            <li>Develop and maintain a large-scale UIKit app for government services, with shared modules for networking, UI components and SwiftUI (iOS 15+).</li>
+            <li>Build service flows with Coordinator and event-driven patterns, a layered network stack, stateless testable business logic and a mock stub server for QA and UI tests.</li>
+            <li>Localization in English and Arabic (RTL), unit tests with XCTest, code style enforced with SwiftLint.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">May 2022 &ndash; Jan 2023</div>
+        <div><h3>Bitpanda</h3><div class="role">Senior iOS Developer</div></div>
+      </div>
+      <div class="job">
+        <div class="when">Feb 2020 &ndash; May 2022</div>
+        <div><h3>Wallbox Chargers</h3><div class="role">Senior iOS Developer</div></div>
+      </div>
+      <div class="job">
+        <div class="when">Apr 2018 &ndash; Dec 2019</div>
+        <div><h3>Zurich Insurance Company Ltd</h3><div class="role">Senior iOS Developer</div></div>
+      </div>
+      <div class="job">
+        <div class="when">Dec 2015 &ndash; Nov 2017</div>
+        <div><h3>Pangea Reality</h3><div class="role">iOS Developer</div></div>
+      </div>
+      <div class="job">
+        <div class="when">Jun 2013 &ndash; Nov 2015</div>
+        <div>
+          <h3>Earlier roles</h3>
+          <div class="role">iOS Developer</div>
+          <p class="earlier">Altran Espa&ntilde;a, FantastIQ Transmedia Solutions, Grupo ICA, Yopp, QBSTUDIO.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="apps">
+      <h2>Apps on the App Store</h2>
+      <div class="apps">
+        <a class="app" href="https://apps.apple.com/us/app/fasttrack-fasting-tracker/id6761045365" target="_blank" rel="noopener">
+          <span class="tag">Utilities</span><h3>FastTrack</h3>
+          <p>Intermittent fasting timer with schedules, streaks and stats. Works with Apple Watch, widgets and Live Activities. Data stays on the device.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+        <a class="app" href="https://apps.apple.com/us/app/disciplined-trading-journal/id6760214933" target="_blank" rel="noopener">
+          <span class="tag">Finance</span><h3>Disciplined</h3>
+          <p>Trading journal for iPhone, Mac and Apple Vision.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+        <a class="app" href="https://apps.apple.com/us/app/scanly-pdf-scanner/id6760976673" target="_blank" rel="noopener">
+          <span class="tag">Documents</span><h3>Scanly</h3>
+          <p>Scan, sign and organize PDFs.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+        <a class="app" href="https://apps.apple.com/us/app/tidio-phone-storage-cleaner/id6760972805" target="_blank" rel="noopener">
+          <span class="tag">Utilities</span><h3>Tidio</h3>
+          <p>Phone storage cleaner for photos, videos and more.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+        <a class="app" href="https://apps.apple.com/us/app/warpcut-easy-video-editor/id6828588929" target="_blank" rel="noopener">
+          <span class="tag">Video</span><h3>Warpcut</h3>
+          <p>Easy video editor for montages, filters and music.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+        <a class="app" href="https://apps.apple.com/us/app/lingoglow/id6827963208" target="_blank" rel="noopener">
+          <span class="tag">Lock Screen</span><h3>LingoGlow</h3>
+          <p>Words on your Lock Screen.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+        <a class="app" href="https://apps.apple.com/us/app/trading-calculator-pro/id6761003285" target="_blank" rel="noopener">
+          <span class="tag">Finance</span><h3>Trading Calculator Pro+</h3>
+          <p>Crypto and forex calculators.</p>
+          <span class="go">View on App Store &rarr;</span>
+        </a>
+      </div>
+      <p class="all"><a href="https://apps.apple.com/us/developer/jordi-milla-catalan/id1883278836" target="_blank" rel="noopener">All apps on my App Store developer page &rarr;</a></p>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <dl class="skills">
+        <div class="skill-row"><dt>Languages &amp; UI</dt><dd class="chips"><span class="chip">Swift</span><span class="chip">UIKit</span><span class="chip">SwiftUI</span><span class="chip">WidgetKit</span><span class="chip">Live Activities</span><span class="chip">watchOS</span></dd></div>
+        <div class="skill-row"><dt>Location &amp; in-car</dt><dd class="chips"><span class="chip">Core Location</span><span class="chip">Apple CarPlay</span></dd></div>
+        <div class="skill-row"><dt>App Store</dt><dd class="chips"><span class="chip">In-app purchases</span><span class="chip">On-device data</span><span class="chip">Publishing</span></dd></div>
+        <div class="skill-row"><dt>Architecture</dt><dd class="chips"><span class="chip">Coordinators</span><span class="chip">MVVM</span><span class="chip">Modular design</span><span class="chip">REST / Codable</span><span class="chip">Performance</span></dd></div>
+        <div class="skill-row"><dt>Quality &amp; delivery</dt><dd class="chips"><span class="chip">XCTest</span><span class="chip">SwiftLint</span><span class="chip">Azure DevOps</span><span class="chip">Scrum</span></dd></div>
+        <div class="skill-row"><dt>Tooling</dt><dd class="chips"><span class="chip">Xcode</span><span class="chip">Git</span><span class="chip">Sentry</span><span class="chip">Claude Code</span><span class="chip">MCP</span><span class="chip">Agent skills</span></dd></div>
+      </dl>
+    </section>
+
+    <section id="education">
+      <h2>Education &amp; certifications</h2>
+      <div class="edu">
+        <div><span><b>Degree in Multimedia</b>, Universitat Polit&egrave;cnica de Catalunya</span><span>2008 &ndash; 2012</span></div>
+        <div><span><b>Mobile apps and services development</b>, Click-and-do</span><span>2012 &ndash; 2013</span></div>
+        <div><span><b>Scrum Master</b>, NetMind</span><span>2019</span></div>
+        <div><span><b>Azure DevOps Fundamentals</b>, NetMind</span><span>2019</span></div>
+        <div><span><b>Anthropic:</b> Claude API, Claude Code in Action, Model Context Protocol, Agent Skills</span><span></span></div>
+        <div><span>Languages: Catalan and Spanish (native), English (professional)</span><span></span></div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <h3>Looking for an iOS developer? Let's talk.</h3>
+      <div class="mail">
+        <code id="email">jmillacatalan@gmail.com</code>
+        <button class="copy" id="copy" type="button">Copy</button>
+      </div>
+      <div class="cta">
+        <a class="btn" href="https://www.linkedin.com/in/jordimilla-25981aa9" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://apps.apple.com/us/developer/jordi-milla-catalan/id1883278836" target="_blank" rel="noopener">App Store</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>&copy; 2026 Jordi Milla Catalan &middot; Barcelona, Spain</footer>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById("copy");
+    var el = document.getElementById("email");
+    btn.addEventListener("click", function () {
+      var text = el.textContent;
+      var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1600); };
+      var fallback = function () {
+        var r = document.createRange(); r.selectNodeContents(el);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = "Press Ctrl/Cmd+C";
+      };
+      try {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } catch (e) { fallback(); }
+    });
+  })();
+</script>
+
+</body>
+</html>
